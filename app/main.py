@@ -3,15 +3,16 @@ import sys
 
 def main():
     # TODO: Uncomment the code below to pass the first stage
+    commands = {"exit":sys.exit, "echo": print}
     while True:
-        sys.stdout.write("$ ")
+        print("$ ", end="")
         
-
-        command = input()
+        command, *args = input().strip().split()
         
-        if command == 'exit':
-            return False
-        print(f"{command}: command not found ")
+        if command in commands:
+            commands[command](*args)
+        else:
+            print(f"{command}: command not found")
             
 
 
