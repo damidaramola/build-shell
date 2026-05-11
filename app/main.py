@@ -3,14 +3,32 @@ import sys
 
 def main():
     # TODO: Uncomment the code below to pass the first stage
-    commands = {"exit":sys.exit, "echo": print}
+    builtins = {"exit", "echo", "type"}
+    
     while True:
-        print("$ ", end="")
+        print("$ ", end="", flush=True)
         
-        command, *args = input().strip().split()
+        parts = input().strip().split()
         
-        if command in commands:
-            commands[command](*args)
+        if not parts:
+            continue
+        
+        command, *args = parts
+        
+        if command == "exit":
+            sys.exit(0)
+        
+        elif command == "echo":
+            print("".join(*args))
+            # example: ["echo", "hello", "world"]
+            
+        elif command == "type":
+            name = args[0]
+            if name in builtins:
+                print(f"{name} is a shell builtin")
+            else:
+                print(f"{name}: not found")
+                    
         else:
             print(f"{command}: command not found")
             
