@@ -19,7 +19,7 @@ def main():
             sys.exit(0)
         
         elif command == "echo":
-            print("".join(*args))
+            print(" ".join(*args))
             # example: ["echo", "hello", "world"]
             
         elif command == "type":
