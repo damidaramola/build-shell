@@ -1,12 +1,15 @@
 import sys
-
+import os
 
 def main():
     # TODO: Uncomment the code below to pass the first stage
     builtins = {"exit", "echo", "type"}
     
+
     while True:
         print("$ ", end="", flush=True)
+        
+        path_dirs  = os.environ['PATH'].split(os.pathsep)
         
         parts = input().strip().split()
         
@@ -23,11 +26,22 @@ def main():
             # example: ["echo", "hello", "world"]
             
         elif command == "type":
+            
             name = args[0]
             if name in builtins:
                 print(f"{name} is a shell builtin")
+                     
             else:
-                print(f"{name}: not found")
+                found = False
+                for directory in path_dirs:
+                    full_path = os.path.join(directory,name)
+                    if os.path.isfile(full_path) and os.access(full_path, os.X_OK):
+                        print(f"{name} is {full_path}")
+                        found = True
+                        break
+                        
+                if not found:
+                    print(f"{name}: not found")
                     
         else:
             print(f"{command}: command not found")
