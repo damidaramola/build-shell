@@ -41,16 +41,20 @@ def main():
                         found = True
                         break
                         
-                # if not found:
-                #     print(f"{name}: not found")
-        else:
+                if not found:
+                    print(f"{name}: not found")
+        else:   
+                found = False
                 for directory in path_dirs:
                     full_path = os.path.join(directory,command)
                     if os.path.isfile(full_path) and os.access(full_path, os.X_OK):
-                        result = subprocess.run([command, *args])
-                        print(result.stdout)
-                    else:
-                        print(f"{command}: command not found")
+                        process = subprocess.Popen([command, *args], executable=full_path)
+                        process.wait()
+                        found = True
+                        break
+                        
+                else:
+                    print(f"{command}: command not found")
                     
         
             
