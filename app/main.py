@@ -41,8 +41,8 @@ def main():
                         found = True
                         break
                         
-                if not found:
-                    print(f"{name}: not found")
+                # if not found:
+                #     print(f"{name}: not found")
         else:
                 for directory in path_dirs:
                     full_path = os.path.join(directory,command)
