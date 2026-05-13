@@ -1,5 +1,6 @@
 import sys
 import os
+import subprocess
 
 def main():
     # TODO: Uncomment the code below to pass the first stage
@@ -42,9 +43,16 @@ def main():
                         
                 if not found:
                     print(f"{name}: not found")
-                    
         else:
-            print(f"{command}: command not found")
+                for directory in path_dirs:
+                    full_path = os.path.join(directory,command)
+                    if os.path.isfile(full_path) and os.access(full_path, os.X_OK):
+                        result = subprocess.run(command, *args)
+                        print(result.stdout)
+                    else:
+                        print(f"{command}: command not found")
+                    
+        
             
 
 
