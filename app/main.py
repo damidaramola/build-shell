@@ -41,8 +41,8 @@ def main():
                         found = True
                         break
                         
-                if not found:
-                    print(f"{name}: not found")
+                # if not found:
+                #     print(f"{name}: not found")
         else:   
                 found = False
                 for directory in path_dirs:
@@ -58,7 +58,5 @@ def main():
                     
         
             
-
-
 if __name__ == "__main__":
     main()
