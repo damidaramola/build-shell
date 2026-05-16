@@ -4,7 +4,7 @@ import subprocess
 
 class Shell:
     def __init__(self):
-        self.builtins = {"exit", "echo", "type"}
+        self.builtins = {"exit", "echo", "type","pwd"}
         self.path_dirs  = os.environ['PATH'].split(os.pathsep)
     
     def check_path(self, cmnd):
