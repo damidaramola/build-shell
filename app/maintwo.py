@@ -13,7 +13,7 @@ class Shell:
             full_path = os.path.join(dir, cmnd)
             
             if os.path.isfile(full_path) and os.access(full_path,os.X_OK):
-                print(f"{cmnd} is {full_path}")
+                # print(f"{cmnd} is {full_path}")
                 
                 
                 return full_path
