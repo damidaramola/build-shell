@@ -2,15 +2,46 @@ import sys
 import os
 import subprocess
 
-def main():
-    # TODO: Uncomment the code below to pass the first stage
-    builtins = {"exit", "echo", "type"}
+class Shell:
+    def __init__(self):
+        self.builtins = {"exit", "echo", "type","pwd"}
+        self.path_dirs  = os.environ['PATH'].split(os.pathsep)
     
-
+    def check_path(self, cmnd):
+        
+        for dir in self.path_dirs:
+            full_path = os.path.join(dir, cmnd)
+            
+            if os.path.isfile(full_path) and os.access(full_path,os.X_OK):
+                print(f"{cmnd} is {full_path}")
+                
+                
+                return full_path
+        return None 
+                
+    
+    def exit(self):
+        sys.exit(0)
+        
+    def echo(self,args):
+        print(" ".join(args))
+        
+    def type(self,args):
+        name= args[0]
+        if name in self.builtins:
+            print(f"{name} is a shell builtin")
+        else:
+            result = self.check_path(name)
+            if result is None:
+                print(f"{name}: not found")
+                
+    def pwd(self):
+        return os.getcwd()       
+    
+def main():
+    shell = Shell()
     while True:
         print("$ ", end="", flush=True)
-        
-        path_dirs  = os.environ['PATH'].split(os.pathsep)
         
         parts = input().strip().split()
         
@@ -19,44 +50,24 @@ def main():
         
         command, *args = parts
         
-        if command == "exit":
-            sys.exit(0)
-        
-        elif command == "echo":
-            print(" ".join(args))
-            # example: ["echo", "hello", "world"]
-            
-        elif command == "type":
-            
-            name = args[0]
-            if name in builtins:
-                print(f"{name} is a shell builtin")
-                     
+        if command == 'exit':
+            shell.exit()
+        elif command == 'echo':
+            shell.echo(args)
+        elif command == 'type':
+            shell.type(args)
+        elif command == 'pwd':
+            shell.pwd()
+        else:
+            full_path = shell.check_path(command)
+            if full_path:
+                process = subprocess.Popen([command, *args], executable=full_path)
+                process.wait()
+                
             else:
-                found = False
-                for directory in path_dirs:
-                    full_path = os.path.join(directory,name)
-                    if os.path.isfile(full_path) and os.access(full_path, os.X_OK):
-                        print(f"{name} is {full_path}")
-                        found = True
-                        break
+                print(f"{command}: not found")
+                
+    
                         
-                # if not found:
-                #     print(f"{name}: not found")
-        else:   
-                found = False
-                for directory in path_dirs:
-                    full_path = os.path.join(directory,command)
-                    if os.path.isfile(full_path) and os.access(full_path, os.X_OK):
-                        process = subprocess.Popen([command, *args], executable=full_path)
-                        process.wait()
-                        found = True
-                        break
-                        
-                else:
-                    print(f"{command}: command not found")
-                    
-        
-            
 if __name__ == "__main__":
     main()
