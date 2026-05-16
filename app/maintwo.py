@@ -35,8 +35,7 @@ class Shell:
             if result is None:
                 print(f"{name}: not found")
                 
-    def pwd():
-        
+    def pwd(self):
         return os.getcwd()       
     
 def main():
