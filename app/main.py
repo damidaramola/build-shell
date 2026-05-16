@@ -15,6 +15,7 @@ class Shell:
             if os.path.isfile(full_path) and os.access(full_path,os.X_OK):
                 
                 
+                
                 return full_path
         return None 
                 
@@ -33,6 +34,8 @@ class Shell:
             result = self.check_path(name)
             if result is None:
                 print(f"{name}: not found")
+            else:
+                print(f"{name} is {result}")
                 
     def pwd(self):
         print( os.getcwd())       
