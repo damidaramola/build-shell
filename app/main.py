@@ -57,7 +57,7 @@ def main():
         elif command == 'type':
             shell.type(args)
         elif command == 'pwd':
-            shell.pwd()
+            print(shell.pwd)()
         else:
             full_path = shell.check_path(command)
             if full_path:
