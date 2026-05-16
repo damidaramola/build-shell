@@ -36,7 +36,7 @@ class Shell:
                 print(f"{name}: not found")
                 
     def pwd(self):
-        return os.getcwd()       
+        print( os.getcwd())       
     
 def main():
     shell = Shell()
@@ -57,7 +57,7 @@ def main():
         elif command == 'type':
             shell.type(args)
         elif command == 'pwd':
-            print(shell.pwd)()
+            shell.pwd()
         else:
             full_path = shell.check_path(command)
             if full_path:
