@@ -33,8 +33,11 @@ class Shell:
         else:
             result = self.check_path(name)
             if result is None:
-                print(f"{name}: command not found")
-            
+                print(f"{name}: not found")
+                
+    def pwd():
+        
+        return os.getcwd()       
     
 def main():
     shell = Shell()
@@ -54,6 +57,8 @@ def main():
             shell.echo(args)
         elif command == 'type':
             shell.type(args)
+        elif command == 'pwd':
+            shell.pwd()
         else:
             full_path = shell.check_path(command)
             if full_path:
@@ -61,7 +66,7 @@ def main():
                 process.wait()
                 
             else:
-                print(f"{command}: command not found")
+                print(f"{command}: not found")
                 
     
                         
