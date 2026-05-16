@@ -41,7 +41,7 @@ class Shell:
 def main():
     shell = Shell()
     while True:
-        print("$ ", end="", flush=True)
+        print("$", end="", flush=True)
         
         parts = input().strip().split()
         
