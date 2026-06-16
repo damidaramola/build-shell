@@ -4,7 +4,7 @@ import subprocess
 
 class Shell:
     def __init__(self):
-        self.builtins = {"exit", "echo", "type","pwd"}
+        self.builtins = {"exit", "echo", "type","pwd", "cd"}
         self.path_dirs  = os.environ['PATH'].split(os.pathsep)
     
     def check_path(self, cmnd):
@@ -38,7 +38,12 @@ class Shell:
                 print(f"{name} is {result}")
                 
     def pwd(self):
-        print( os.getcwd())       
+        print( os.getcwd())
+        
+    def cd(self, args:str):
+        if not os.chdir(args):
+            print(f"cd:{args}: No such file or directory")
+            
     
 def main():
     shell = Shell()
@@ -60,6 +65,8 @@ def main():
             shell.type(args)
         elif command == 'pwd':
             shell.pwd()
+        elif command == 'cd':
+            shell.cd(args)
         else:
             full_path = shell.check_path(command)
             if full_path:
